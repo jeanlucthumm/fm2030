@@ -8,7 +8,7 @@
 
 using namespace std;
 
-std::vector<std::string> Scanner::nextOp() const {
+std::vector<std::string> Scanner::nextOp() {
     string op = nextToken();
 
     int numops = getOpCount(op);
@@ -28,14 +28,16 @@ std::vector<std::string> Scanner::nextOp() const {
     return ret;
 }
 
-
 Scanner::Scanner(const std::string &path) {
     ifstream in{path};
 
     string token;
     while (in) {
-        // TODO filter out comments
         in >> token;
+
+        // filter out comments
+        if (token == "//")
+
         tokens.push_back(token);
     }
     itr = tokens.begin();
@@ -49,7 +51,7 @@ int Scanner::getOpCount(std::string_view op) const {
     return itr->second.numOperands;
 }
 
-std::string Scanner::nextToken() const {
+std::string Scanner::nextToken() {
     if (itr == tokens.end()) {
         throw runtime_error{"unexpected end of file"};
     }

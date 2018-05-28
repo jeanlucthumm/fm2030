@@ -15,12 +15,12 @@ class Scanner {
 public:
     explicit Scanner(const std::string &path);
 
-    std::vector<std::string> nextOp() const;
+    std::vector<std::string> nextOp();
 
 private:
     int getOpCount(std::string_view op) const;
 
-    std::string nextToken() const;
+    std::string nextToken();
 
     std::vector<std::string> tokens;
     std::vector<std::string>::iterator itr;
