@@ -11,6 +11,7 @@
 
 struct OpEntry{
     int numOperands;
+    unsigned char opCode;
 };
 
 class Parser {
