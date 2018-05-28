@@ -13,6 +13,11 @@ using namespace std;
 std::vector<std::string> Scanner::nextOp() {
     string op = nextToken();
 
+    // check for labels // FIXME what if there are two colons?
+    if (op.find(':') != string::npos) {
+        return {op};
+    }
+
     int numops = getOpCount(op);
     if (numops == -1) {
         throw runtime_error{"unknown instruction: " + op};
@@ -24,7 +29,8 @@ std::vector<std::string> Scanner::nextOp() {
     if (numops == 2) {
         ret.push_back(nextToken());
         ret.push_back(nextToken());
-    } else if (numops == 1) {
+    }
+    else if (numops == 1) {
         ret.push_back(nextToken());
     }
     return ret;
@@ -34,15 +40,16 @@ Scanner::Scanner(const std::string &path) {
     ifstream in{path};
 
     string token;
-    while (in) {
+    while (true) {
         in >> token;
+        if (!in) break;
 
         // filter out comments
         if (token == "//") {
             getline(in, token); // move to next line
             continue;
         }
-        else if (token == "/*") { // block comments
+        if (token == "/*") { // block comments
             while (token != "*/") {
                 if (!in) throw runtime_error{"unexpected EOF"};
                 in >> token;

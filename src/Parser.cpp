@@ -60,15 +60,23 @@ const unordered_map<string, OpEntry> Parser::opTable = {
                 0x0C,
             }},
     {"be", {
-                2,
+                1,
                 0x0D,
             }},
     {"bne", {
-                2,
+                1,
                 0x0E,
             }},
     {"jump", {
-                2,
+                1,
                 0x0F,
             }},
+    {"set", {
+                 2,
+                 0x00,
+             }},
+    {"mov", {
+                 2,
+                 0x00,
+             }},
 };

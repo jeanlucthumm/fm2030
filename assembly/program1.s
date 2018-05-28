@@ -18,7 +18,7 @@ program1:
 		mov r0, s3 			// r0 <- msg length (41)
 		inc r0
 		ld	r1, r0			// r1 <- LFSR pattern (42)
-		lfsrs		r1		
+		lfsrs	r1
 
 		inc r0
 		ld  r1, r0			// r1 <- LFSR start state (43)
@@ -37,7 +37,7 @@ program1:
 		mov r0, s3			// r0 <- space char
 
 while1:
-		lfsrn 	s0
+		lfsrn 	s0, s0
 		xor r3, s0			// r3 <- LFSR (s0) ^ space char (r0)
 		st	r2, r3 			// [dest itr] <- r3
 		inc r2					// increment dest itr
@@ -51,7 +51,7 @@ while1:
 
 while2:
 		ld  r0, r1			// r0 <- message char
-		lfsrn  s0			  
+		lfsrn   s0, s0
 		xor r0, s0			// r0 <- message char (r0) ^ LFSRN (s0)
 		st  r2, r0			// [itr] <- r0
 		
