@@ -33,7 +33,6 @@ public:
     void assemble(const std::ofstream &out);
 
 private:
-public:
     Scanner &scanner;
     int counter;
 

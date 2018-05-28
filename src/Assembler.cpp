@@ -144,5 +144,11 @@ instr_t Assembler::rFormat(int opCode, int opA, int opB, int sbit) {
 
 /// \pre parameters contain only 0s for non-relevant bits
 instr_t Assembler::bFormat(int opCode, int immediate) {
-    return 0;
+    instr_t res = 0x0000;
+    opCode <<= 5;
+
+    res |= opCode;
+    res |= immediate;
+
+    return res;
 }
