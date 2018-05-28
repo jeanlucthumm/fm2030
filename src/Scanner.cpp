@@ -6,6 +6,7 @@
 #include "Parser.hpp"
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 
 using namespace std;
@@ -56,6 +57,9 @@ Scanner::Scanner(const std::string &path) {
             }
             continue;
         }
+
+        // clean token
+        token.erase(std::remove(token.begin(), token.end(), ','), token.end());
 
         tokens.push_back(token);
     }
