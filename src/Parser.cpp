@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const unordered_map<string, OpEntry> Parser::opTable = {
+const unordered_map<string, OpEntry> Parser::opTable = { // NOLINT(cert-err58-cpp)
     {"add", {
                 2,
                 0x00,
