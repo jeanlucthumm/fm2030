@@ -1,7 +1,13 @@
 #include <iostream>
+#include <fstream>
+#include "Scanner.hpp"
 
 using namespace std;
 
 int main() {
-    cout << "Hello World" << endl;
+    ifstream in{"assembly/program1.s"};
+    Scanner scanner{in};
+    scanner.nextOp();
+
+    return EXIT_SUCCESS;
 }
