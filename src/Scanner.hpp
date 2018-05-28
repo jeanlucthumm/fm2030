@@ -13,7 +13,7 @@
 // Scanner reads an input file and processe
 class Scanner {
 public:
-    explicit Scanner(const std::string &path);
+    explicit Scanner(std::ifstream &in);
 
     std::vector<std::string> nextOp();
 

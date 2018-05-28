@@ -3,7 +3,7 @@
 //
 
 #include "Scanner.hpp"
-#include "Parser.hpp"
+#include "Assembler.hpp"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
@@ -37,9 +37,7 @@ std::vector<std::string> Scanner::nextOp() {
     return ret;
 }
 
-Scanner::Scanner(const std::string &path) {
-    ifstream in{path};
-
+Scanner::Scanner(std::ifstream &in) {
     string token;
     while (true) {
         in >> token;
@@ -67,8 +65,8 @@ Scanner::Scanner(const std::string &path) {
 }
 
 int Scanner::getOpCount(std::string_view op) const {
-    auto itr = Parser::opTable.find(string{op});
-    if (itr == Parser::opTable.end()) {
+    auto itr = Assembler::opTable.find(string{op});
+    if (itr == Assembler::opTable.end()) {
         return -1;
     }
     return itr->second.numOperands;
