@@ -126,3 +126,23 @@ void Assembler::assemble(const std::ofstream &out) {
         vector<string> instr = scanner.nextOp();
     }
 }
+
+/// \pre parameters contain only 0s for non-relevant bits
+instr_t Assembler::rFormat(int opCode, int opA, int opB, int sbit) {
+    instr_t res = 0x0000;
+    opCode <<= 5;
+    opA <<= 3;
+    opB <<= 1;
+
+    res |= opCode;
+    res |= opA;
+    res |= opB;
+    res |= sbit;
+
+    return res;
+}
+
+/// \pre parameters contain only 0s for non-relevant bits
+instr_t Assembler::bFormat(int opCode, int immediate) {
+    return 0;
+}

@@ -11,6 +11,8 @@
 #include <fstream>
 #include "Scanner.hpp"
 
+typedef unsigned short instr_t;
+
 enum InstrFormat {
     R, B
 };
@@ -31,8 +33,13 @@ public:
     void assemble(const std::ofstream &out);
 
 private:
+public:
     Scanner &scanner;
     int counter;
+
+    static instr_t rFormat(int opCode, int opA, int opB, int sbit);
+
+    static instr_t bFormat(int opCode, int immediate);
 };
 
 
