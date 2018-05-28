@@ -19,6 +19,8 @@ public:
 
     bool eof() const;
 
+    void reset();
+
 private:
     int getOpCount(std::string_view op) const;
 

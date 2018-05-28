@@ -84,3 +84,7 @@ std::string Scanner::nextToken() {
 bool Scanner::eof() const {
     return itr == tokens.end();
 }
+
+void Scanner::reset() {
+    itr = tokens.begin();
+}

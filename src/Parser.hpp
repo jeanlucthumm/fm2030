@@ -8,6 +8,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "Scanner.hpp"
 
 struct OpEntry{
     int numOperands;
@@ -17,6 +18,9 @@ struct OpEntry{
 class Parser {
 public:
     const static std::unordered_map<std::string, OpEntry> opTable;
+
+private:
+    Scanner &scanner;
 };
 
 
