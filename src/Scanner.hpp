@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <fstream>
 #include <vector>
+#include <string>
 
 // Scanner reads an input file and processe
 class Scanner {
@@ -17,7 +18,9 @@ public:
     std::vector<std::string> nextOp() const;
 
 private:
-    int getOpCount(std::string_view op);
+    int getOpCount(std::string_view op) const;
+
+    std::string nextToken() const;
 
     std::vector<std::string> tokens;
     std::vector<std::string>::iterator itr;
