@@ -5,6 +5,8 @@
 #include "Scanner.hpp"
 #include "Parser.hpp"
 #include <iostream>
+#include <sstream>
+
 
 using namespace std;
 
@@ -36,7 +38,17 @@ Scanner::Scanner(const std::string &path) {
         in >> token;
 
         // filter out comments
-        if (token == "//")
+        if (token == "//") {
+            getline(in, token); // move to next line
+            continue;
+        }
+        else if (token == "/*") { // block comments
+            while (token != "*/") {
+                if (!in) throw runtime_error{"unexpected EOF"};
+                in >> token;
+            }
+            continue;
+        }
 
         tokens.push_back(token);
     }
