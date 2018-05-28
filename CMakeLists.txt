@@ -5,6 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SRC_FILES src/main.cpp
         src/Scanner.cpp src/Scanner.hpp
-        src/Parser.cpp src/Parser.hpp)
+        src/Assembler.cpp src/Assembler.hpp)
 
 add_executable(fm2030_asm ${SRC_FILES})

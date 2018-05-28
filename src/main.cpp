@@ -5,7 +5,8 @@
 using namespace std;
 
 int main() {
-    Scanner scanner{"assembly/program1.s"};
+    ifstream in{"assembly/program1.s"};
+    Scanner scanner{in};
 
     while (!scanner.eof()) {
         vector<string> instr = scanner.nextOp();

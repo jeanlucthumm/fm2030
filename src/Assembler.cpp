@@ -2,11 +2,11 @@
 // Created by Jean-Luc Thumm on 5/28/18.
 //
 
-#include "Parser.hpp"
+#include "Assembler.hpp"
 
 using namespace std;
 
-const unordered_map<string, OpEntry> Parser::opTable = { // NOLINT(cert-err58-cpp)
+const unordered_map<string, OpEntry> Assembler::opTable = { // NOLINT(cert-err58-cpp)
     {"add", {
                 2,
                 0x00,

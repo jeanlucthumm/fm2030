@@ -8,6 +8,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <fstream>
 #include "Scanner.hpp"
 
 struct OpEntry{
@@ -15,9 +16,13 @@ struct OpEntry{
     unsigned char opCode;
 };
 
-class Parser {
+class Assembler {
 public:
     const static std::unordered_map<std::string, OpEntry> opTable;
+
+    Assembler(Scanner &scanner);
+
+    void assemble(const std::ofstream &out);
 
 private:
     Scanner &scanner;
