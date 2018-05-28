@@ -46,6 +46,7 @@ while1:
 		bne while1
 
 		// Encrypt message
+
 		mov r2, s1			// r2 <- first position after spaces, itr
 		clr r1					// r1 <- reset message iterator to 0 (0->41)
 
