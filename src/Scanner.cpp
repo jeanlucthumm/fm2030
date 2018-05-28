@@ -3,18 +3,33 @@
 //
 
 #include "Scanner.hpp"
+#include "Parser.hpp"
 #include <iostream>
 
 using namespace std;
 
-Scanner::Scanner(std::ifstream &input) : input{input} {}
-
 std::vector<std::string> Scanner::nextOp() const {
     string token;
-    while(input) {
-        input >> token;
-        cout << token << endl;
-    }
+
 
     return vector<string>{};
+}
+
+Scanner::Scanner(const std::string &path) {
+    ifstream in{path};
+
+    string token;
+    while (in) {
+        in >> token;
+        tokens.push_back(token);
+    }
+    itr = tokens.begin();
+}
+
+int Scanner::getOpCount(std::string_view op) {
+    auto itr = Parser::opTable.find(string{op});
+    if (itr == Parser::opTable.end()) {
+        return -1;
+    }
+    return itr->second.numOperands;
 }

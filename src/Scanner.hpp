@@ -12,14 +12,15 @@
 // Scanner reads an input file and processe
 class Scanner {
 public:
-    explicit Scanner(std::ifstream &input);
+    explicit Scanner(const std::string &path);
 
     std::vector<std::string> nextOp() const;
 
 private:
-    static std::unordered_map<std::string, int> opCountTable;
+    int getOpCount(std::string_view op);
 
-    std::ifstream &input;
+    std::vector<std::string> tokens;
+    std::vector<std::string>::iterator itr;
 };
 
 #endif //FM2030_ASM_SCANNER_HPP
