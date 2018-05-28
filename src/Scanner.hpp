@@ -17,6 +17,8 @@ public:
 
     std::vector<std::string> nextOp();
 
+    bool eof() const;
+
 private:
     int getOpCount(std::string_view op) const;
 

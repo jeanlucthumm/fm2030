@@ -69,3 +69,7 @@ std::string Scanner::nextToken() {
     }
     return *itr++;
 }
+
+bool Scanner::eof() const {
+    return itr == tokens.end();
+}
