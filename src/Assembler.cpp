@@ -123,7 +123,10 @@ Assembler::Assembler(Scanner &scanner) : scanner{scanner}, counter{0} {}
 void Assembler::assemble(const std::ofstream &out) {
     scanner.reset();
     while (!scanner.eof()) {
-        vector<string> instr = scanner.nextOp();
+        vector<string> tokens = scanner.nextOp();
+        instr_t instr = assmInstr(tokens);
+
+        // TODO
     }
 }
 
@@ -151,4 +154,15 @@ instr_t Assembler::bFormat(int opCode, int immediate) {
     res |= immediate;
 
     return res;
+}
+
+instr_t Assembler::assmInstr(std::vector<std::string> &tokens) {
+    OpEntry entry = (*opTable.find(tokens[0])).second;
+
+    if (entry.format == R) {
+
+    }
+    else if (entry.format == B) {
+
+    }
 }
