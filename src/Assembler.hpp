@@ -17,16 +17,23 @@ enum InstrFormat {
     R, B
 };
 
-struct OpEntry{
+struct OpEntry {
     int numOperands;
     unsigned char opCode;
     InstrFormat format;
     bool composite;
 };
 
+struct RegEntry {
+    unsigned char code;
+    bool special;
+};
+
 class Assembler {
 public:
     const static std::unordered_map<std::string, OpEntry> opTable;
+
+    const static std::unordered_map<std::string, RegEntry> regTable;
 
     explicit Assembler(Scanner &scanner);
 

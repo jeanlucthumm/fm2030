@@ -117,6 +117,41 @@ const unordered_map<string, OpEntry> Assembler::opTable = { // NOLINT(cert-err58
               }},
 };
 
+const std::unordered_map<std::string, RegEntry> Assembler::regTable = { // NOLINT(cert-err58-cpp)
+    {"r0", {
+               0x00,
+               false,
+           }},
+    {"r1", {
+               0x01,
+               false,
+           }},
+    {"r2", {
+               0x10,
+               false,
+           }},
+    {"r3", {
+               0x11,
+               false,
+           }},
+    {"s0", {
+               0x00,
+               true,
+           }},
+    {"s1", {
+               0x01,
+               true,
+           }},
+    {"s2", {
+               0x10,
+               true,
+           }},
+    {"s3", {
+               0x11,
+               true,
+           }},
+};
+
 Assembler::Assembler(Scanner &scanner) : scanner{scanner}, counter{0} {}
 
 /// \throw Any error from Scanner::nextOp()
