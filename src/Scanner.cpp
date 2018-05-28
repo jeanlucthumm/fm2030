@@ -11,6 +11,7 @@
 
 using namespace std;
 
+/// \throw Unexpected EOF and unknown instruction exceptions
 std::vector<std::string> Scanner::nextOp() {
     string op = nextToken();
 
