@@ -191,7 +191,7 @@ instr_t Assembler::bFormat(int opCode, int immediate) {
 }
 
 /// \throw Unknown register exception
-std::vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
+vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens, int instrCount) {
     OpEntry entry = (*opTable.find(tokens[0])).second;
 
     if (entry.composite) {
@@ -276,7 +276,7 @@ std::vector<instr_t> Assembler::handleComp(std::vector<std::string> tokens) {
         // convert to instr_t
         vector<instr_t> res;
         for (auto &ctokens : compInstructions) {
-            instr_t instr = assmInstr(ctokens)[0]; // will always return something
+            instr_t instr = assmInstr(ctokens, 0)[0]; // will always return something
             res.push_back(instr);
         }
 
