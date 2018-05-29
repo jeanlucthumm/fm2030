@@ -43,7 +43,7 @@ public:
 public:
     static std::vector<instr_t> assmInstr(std::vector<std::string> &tokens);
 
-    static instr_t rFormat(int opCode, int opA, int opB, int sbit);
+    static instr_t rFormat(int opCode, int rd, int rs, int sbit);
 
     static instr_t bFormat(int opCode, int immediate);
 

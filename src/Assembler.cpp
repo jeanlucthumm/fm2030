@@ -165,15 +165,15 @@ void Assembler::assemble(const std::ofstream &out) {
 }
 
 /// \pre parameters contain only 0s for non-relevant bits
-instr_t Assembler::rFormat(int opCode, int opA, int opB, int sbit) {
+instr_t Assembler::rFormat(int opCode, int rd, int rs, int sbit) {
     instr_t res = 0x0000;
     opCode <<= 5;
-    opA <<= 3;
-    opB <<= 1;
+    rd <<= 3;
+    rs <<= 1;
 
     res |= opCode;
-    res |= opA;
-    res |= opB;
+    res |= rd;
+    res |= rs;
     res |= sbit;
 
     return res;
