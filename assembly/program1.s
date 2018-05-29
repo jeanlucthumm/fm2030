@@ -37,7 +37,8 @@ program1:
 		mov r0, s3			// r0 <- space char
 
 while1:
-		lfsrn 	s0, s0
+		lfsrn 	r0, s0
+		mov s0, r0
 		xor r3, s0			// r3 <- LFSR (s0) ^ space char (r0)
 		st	r2, r3 			// [dest itr] <- r3
 		inc r2					// increment dest itr
