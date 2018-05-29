@@ -191,30 +191,49 @@ instr_t Assembler::bFormat(int opCode, int immediate) {
 }
 
 /// \throw Unknown register exception
-vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens, int instrCount) {
-    OpEntry entry = (*opTable.find(tokens[0])).second;
-
-    if (entry.composite) {
-        return handleComp(tokens);
+vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
+    // handle labels
+    if (tokens[0].find(':') != string::npos) { // only labels have ':'
+        labelTable[tokens[0]] = counter + 1; // label refers to next instruction
+        return {};
     }
 
-    if (entry.format == R) {
-        // lookup registers
-        auto itr = regTable.find(tokens[1]);
-        if (itr == regTable.end()) {
-            throw runtime_error{"unknown register: " + tokens[1]};
-        }
-        RegEntry rd = itr->second;
+    auto op = opLookup(tokens[0]);
 
-        itr = regTable.find(tokens[2]);
-        if (itr == regTable.end()) {
-            throw runtime_error{"unknown register: " + tokens[2]};
-        }
-        RegEntry rs = itr->second;
-
-
+    if (op.composite) {
+        vector<instr_t> res = handleComp(tokens);
+        counter += res.size();
+        return res;
     }
-    else if (entry.format == B) {
+
+    if (op.format == R) {
+        instr_t instr;
+
+        auto rd = regLookup(tokens[1]);
+
+        // handle shl which has amt in rs
+        if (tokens[0] == "shl") {
+            auto sbit = (rd.special) ? 1 : 0;
+
+            instr = rFormat(op.code, rd.code, std::atoi(tokens[2].c_str()), sbit);
+        }
+
+        if (tokens.size() == 3) {
+            auto rs = regLookup(tokens[2]);
+            int sbit = (rs.special) ? 1 : 0;
+
+            instr = rFormat(op.code, rd.code, rs.code, sbit);
+        }
+        else if (tokens.size() == 2) {
+            int sbit = (rd.special) ? 1 : 0;
+
+            instr = rFormat(op.code, rd.code, 0, sbit);
+        }
+
+        counter++;
+        return {instr}
+    }
+    else if (op.format == B) {
 
     }
 }
@@ -248,18 +267,24 @@ std::vector<instr_t> Assembler::handleComp(std::vector<std::string> tokens) {
         }
 
         auto opEntry = opLookup(op);
-        instr_t instr = rFormat(opEntry.opCode, rdEntry.code, rsEntry.code, sbit);
+        instr_t instr = rFormat(opEntry.code, rdEntry.code, rsEntry.code, sbit);
         return {instr};
     }
     else if (tokens[0] == "set") {
         int num = std::stoi(tokens[2]);
 
-        vector<vector<string>> compInstructions;
+        auto inc = opLookup("inc");
+        auto shl = opLookup("shl");
+        auto rd = regLookup(tokens[1]);
+        auto sbit = (rd.special) ? 1 : 0;
+
+        vector<instr_t> compInstructions;
 
         // decompose into shifts and increments
         while (num != 0) {
             if (num % 2 == 1) {
-                compInstructions.push_back({"inc", tokens[1]});
+                instr_t instr = rFormat(inc.code, rd.code, 0, sbit);
+                compInstructions.push_back(instr);
                 num -= 1;
             }
             if (num == 0) break;
@@ -268,19 +293,13 @@ std::vector<instr_t> Assembler::handleComp(std::vector<std::string> tokens) {
                 num /= 2;
                 amt++;
             }
-            compInstructions.push_back({"shl", std::to_string(amt)});
+            instr_t instr = rFormat(shl.code, rd.code, amt, sbit);
+            compInstructions.push_back(instr);
         }
 
         std::reverse(compInstructions.begin(), compInstructions.end());
 
-        // convert to instr_t
-        vector<instr_t> res;
-        for (auto &ctokens : compInstructions) {
-            instr_t instr = assmInstr(ctokens, 0)[0]; // will always return something
-            res.push_back(instr);
-        }
-
-        return res;
+        return compInstructions;
     }
     return {};
 }

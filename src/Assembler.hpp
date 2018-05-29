@@ -20,7 +20,7 @@ enum InstrFormat {
 
 struct OpEntry {
     int numOperands;
-    unsigned char opCode;
+    unsigned char code;
     InstrFormat format;
     bool composite;
 };
@@ -41,7 +41,6 @@ public:
     void assemble(const std::ofstream &out);
 
 public:
-    static std::vector<instr_t> assmInstr(std::vector<std::string> &tokens, int instrCount);
 
     static instr_t rFormat(int opCode, int rd, int rs, int sbit);
 
@@ -56,6 +55,10 @@ public:
 private:
     Scanner &scanner;
     int counter;
+
+    std::vector<instr_t> assmInstr(std::vector<std::string> &tokens);
+
+    std::unordered_map<std::string, int> labelTable;
 };
 
 

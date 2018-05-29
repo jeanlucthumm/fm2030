@@ -51,8 +51,8 @@ TEST(Assembler, bFormat) {
 TEST(Assembler, handleCompMov) {
     auto s0 = Assembler::regLookup("s0").code;
     auto r1 = Assembler::regLookup("r1").code;
-    auto mover = Assembler::opLookup("mover").opCode;
-    auto moved = Assembler::opLookup("moved").opCode;
+    auto mover = Assembler::opLookup("mover").code;
+    auto moved = Assembler::opLookup("moved").code;
 
     instr_t mov_s0r1 = Assembler::rFormat(moved, s0, r1, 0);
     instr_t mov_r1s0 = Assembler::rFormat(moved, r1, s0, 1);
