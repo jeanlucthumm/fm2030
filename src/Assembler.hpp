@@ -9,6 +9,7 @@
 #include <string>
 #include <unordered_map>
 #include <fstream>
+#include <vector>
 #include "Scanner.hpp"
 
 typedef unsigned short instr_t;
@@ -43,11 +44,17 @@ private:
     Scanner &scanner;
     int counter;
 
-    static instr_t assmInstr(std::vector<std::string> &tokens);
+    static std::vector<instr_t> assmInstr(std::vector<std::string> &tokens);
 
     static instr_t rFormat(int opCode, int opA, int opB, int sbit);
 
     static instr_t bFormat(int opCode, int immediate);
+
+    static std::vector<instr_t> handleComp(std::vector<std::string> tokens);
+
+    static RegEntry regLookup(const std::string &reg);
+
+    static OpEntry opLookup(const std::string &op);
 };
 
 

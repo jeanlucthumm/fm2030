@@ -159,7 +159,6 @@ void Assembler::assemble(const std::ofstream &out) {
     scanner.reset();
     while (!scanner.eof()) {
         vector<string> tokens = scanner.nextOp();
-        instr_t instr = assmInstr(tokens);
 
         // TODO
     }
@@ -191,13 +190,115 @@ instr_t Assembler::bFormat(int opCode, int immediate) {
     return res;
 }
 
-instr_t Assembler::assmInstr(std::vector<std::string> &tokens) {
+/// \throw Unknown register exception
+std::vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
     OpEntry entry = (*opTable.find(tokens[0])).second;
 
+    if (entry.composite) {
+        return handleComp(tokens);
+    }
+
     if (entry.format == R) {
+        // lookup registers
+        auto itr = regTable.find(tokens[1]);
+        if (itr == regTable.end()) {
+            throw runtime_error{"unknown register: " + tokens[1]};
+        }
+        RegEntry rd = itr->second;
+
+        itr = regTable.find(tokens[2]);
+        if (itr == regTable.end()) {
+            throw runtime_error{"unknown register: " + tokens[2]};
+        }
+        RegEntry rs = itr->second;
+
 
     }
     else if (entry.format == B) {
 
     }
+}
+
+/// \throw regLookup() opLookup()
+std::vector<instr_t> Assembler::handleComp(std::vector<std::string> tokens) {
+    if (tokens[0] == "mov") {
+        auto rdEntry = regLookup(tokens[1]);
+        auto rsEntry = regLookup(tokens[2]);
+        bool rds = rdEntry.special;
+        bool rss = rdEntry.special;
+
+        int sbit;
+        string op;
+
+        if (rds && rss) {
+            sbit = 1;
+            op = "mover";
+        }
+        else if (!rds && !rss) {
+            sbit = 0;
+            op = "mover";
+        }
+        else if (!rds && rss) {
+            sbit = 1;
+            op = "moved";
+        }
+        else if (rds && !rss) {
+            sbit = 0;
+            op = "moved";
+        }
+
+        auto opEntry = opLookup(op);
+        instr_t instr = rFormat(opEntry.opCode, rdEntry.code, rsEntry.code, sbit);
+        return {instr};
+    }
+    else if (tokens[0] == "set") {
+        int num = std::stoi(tokens[2]);
+
+        vector<vector<string>> compInstructions;
+
+        // decompose into shifts and increments
+        while (num != 0) {
+            if (num % 2 == 1) {
+                compInstructions.push_back({"inc", tokens[1]});
+                num -= 1;
+            }
+            if (num == 0) break;
+            int amt = 0;
+            while (amt <= 3 && num % 2 != 1) {
+                num /= 2;
+                amt++;
+            }
+            compInstructions.push_back({"shl", std::to_string(amt)});
+        }
+
+        std::reverse(compInstructions.begin(), compInstructions.end());
+
+        // convert to instr_t
+        vector<instr_t> res;
+        for (auto &ctokens : compInstructions) {
+            instr_t instr = assmInstr(ctokens)[0]; // will always return something
+            res.push_back(instr);
+        }
+
+        return res;
+    }
+    return {};
+}
+
+/// \throw Unknown register error
+RegEntry Assembler::regLookup(const std::string &reg) {
+    auto itr = regTable.find(reg);
+    if (itr == regTable.end()) {
+        throw runtime_error{"unknown register: " + reg};
+    }
+    return itr->second;
+}
+
+/// \throw Unknown register error
+OpEntry Assembler::opLookup(const std::string &op) {
+    auto itr = opTable.find(op);
+    if (itr == opTable.end()) {
+        throw runtime_error{"unknown register: " + op};
+    }
+    return itr->second;
 }
