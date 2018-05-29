@@ -225,7 +225,7 @@ std::vector<instr_t> Assembler::handleComp(std::vector<std::string> tokens) {
         auto rdEntry = regLookup(tokens[1]);
         auto rsEntry = regLookup(tokens[2]);
         bool rds = rdEntry.special;
-        bool rss = rdEntry.special;
+        bool rss = rsEntry.special;
 
         int sbit;
         string op;
@@ -238,11 +238,11 @@ std::vector<instr_t> Assembler::handleComp(std::vector<std::string> tokens) {
             sbit = 0;
             op = "mover";
         }
-        else if (!rds && rss) {
+        else if (!rds) {
             sbit = 1;
             op = "moved";
         }
-        else if (rds && !rss) {
+        else {
             sbit = 0;
             op = "moved";
         }

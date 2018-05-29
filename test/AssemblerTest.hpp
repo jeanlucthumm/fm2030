@@ -48,6 +48,23 @@ TEST(Assembler, bFormat) {
     );
 }
 
+TEST(Assembler, handleCompMov) {
+    auto s0 = Assembler::regLookup("s0").code;
+    auto r1 = Assembler::regLookup("r1").code;
+    auto mover = Assembler::opLookup("mover").opCode;
+    auto moved = Assembler::opLookup("moved").opCode;
+
+    instr_t mov_s0r1 = Assembler::rFormat(moved, s0, r1, 0);
+    instr_t mov_r1s0 = Assembler::rFormat(moved, r1, s0, 1);
+    instr_t mov_s0s0 = Assembler::rFormat(mover, s0, s0, 1);
+    instr_t mov_r1r1 = Assembler::rFormat(mover, r1, r1, 0);
+
+    EXPECT_EQ(Assembler::handleComp({"mov", "s0", "r1"})[0], mov_s0r1);
+    EXPECT_EQ(Assembler::handleComp({"mov", "r1", "s0"})[0], mov_r1s0);
+    EXPECT_EQ(Assembler::handleComp({"mov", "s0", "s0"})[0], mov_s0s0);
+    EXPECT_EQ(Assembler::handleComp({"mov", "r1", "r1"})[0], mov_r1r1);
+}
+
 #endif //FM2030_ASM_ASSEMBLERTEST_HPP
 
 #pragma clang diagnostic pop
