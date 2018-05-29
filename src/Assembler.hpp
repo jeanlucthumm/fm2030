@@ -40,10 +40,7 @@ public:
 
     void assemble(const std::ofstream &out);
 
-private:
-    Scanner &scanner;
-    int counter;
-
+public:
     static std::vector<instr_t> assmInstr(std::vector<std::string> &tokens);
 
     static instr_t rFormat(int opCode, int opA, int opB, int sbit);
@@ -55,6 +52,10 @@ private:
     static RegEntry regLookup(const std::string &reg);
 
     static OpEntry opLookup(const std::string &op);
+
+private:
+    Scanner &scanner;
+    int counter;
 };
 
 
