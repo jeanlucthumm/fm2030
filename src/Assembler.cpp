@@ -229,11 +229,19 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
 
             instr = rFormat(op.code, rd.code, 0, sbit);
         }
+        else {
+            return {};
+        }
 
         counter++;
         return {instr};
     }
     else if (op.format == B) {
+        // lookup label
+        auto itr = labelTable.find(tokens[1]);
+        if (itr == labelTable.end()) {
+            throw runtime_error{"unknown label"};
+        }
 
     }
 }
