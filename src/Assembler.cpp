@@ -231,7 +231,7 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
         }
 
         counter++;
-        return {instr}
+        return {instr};
     }
     else if (op.format == B) {
 
@@ -289,7 +289,7 @@ std::vector<instr_t> Assembler::handleComp(std::vector<std::string> tokens) {
             }
             if (num == 0) break;
             int amt = 0;
-            while (amt <= 3 && num % 2 != 1) {
+            while (amt < 3 && num % 2 != 1) {
                 num /= 2;
                 amt++;
             }

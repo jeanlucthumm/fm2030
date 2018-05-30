@@ -7,6 +7,8 @@
 #include <gtest/gtest.h>
 #include "../src/Assembler.hpp"
 
+using namespace std;
+
 TEST(Assembler, regLookup) {
     EXPECT_NO_THROW({
         auto entry = Assembler::regLookup("r1");
@@ -63,6 +65,27 @@ TEST(Assembler, handleCompMov) {
     EXPECT_EQ(Assembler::handleComp({"mov", "r1", "s0"})[0], mov_r1s0);
     EXPECT_EQ(Assembler::handleComp({"mov", "s0", "s0"})[0], mov_s0s0);
     EXPECT_EQ(Assembler::handleComp({"mov", "r1", "r1"})[0], mov_r1r1);
+}
+
+TEST(Assembler, handleCompSet) {
+    auto r0 = Assembler::regLookup("r0").code;
+    auto incOp = Assembler::opLookup("inc").code;
+    auto shlOp = Assembler::opLookup("shl").code;
+
+    instr_t inc = Assembler::rFormat(incOp, r0, 0, 0);
+    instr_t shl1 = Assembler::rFormat(shlOp, r0, 1, 0);
+    instr_t shl2 = Assembler::rFormat(shlOp, r0, 2, 0);
+    instr_t shl3 = Assembler::rFormat(shlOp, r0, 3, 0);
+
+    vector<instr_t> res10111 = {
+        inc, shl2, inc, shl1, inc, shl1, inc
+    };
+    EXPECT_EQ(Assembler::handleComp({"set", "r0", "23"}), res10111);
+
+    vector<instr_t> res1051 = {
+        inc, shl3, shl3, inc, shl1, inc, shl2, inc, shl1, inc
+    };
+    EXPECT_EQ(Assembler::handleComp({"set", "r0", "1051"}), res1051);
 }
 
 #endif //FM2030_ASM_ASSEMBLERTEST_HPP
