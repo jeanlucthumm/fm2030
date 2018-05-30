@@ -160,7 +160,11 @@ void Assembler::assemble(const std::ofstream &out) {
     while (!scanner.eof()) {
         vector<string> tokens = scanner.nextOp();
 
-        // TODO
+        vector<instr_t> instructions = assmInstr(tokens);
+
+        for (instr_t instr : instructions) {
+            // TODO find a suitable output representation
+        }
     }
 }
 
@@ -240,9 +244,20 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
         // lookup label
         auto itr = labelTable.find(tokens[1]);
         if (itr == labelTable.end()) {
-            throw runtime_error{"unknown label"};
+            throw runtime_error{"unknown label: \"" + tokens[1] + "\""};
+        }
+        int addr = itr->second;
+
+        int offset = addr - (counter + 2); // PC + 1, relative
+
+        if (offset < -16 || offset > 15) {
+            throw runtime_error{"label \"" + tokens[1] + "\" refers to an offset" +
+                                " outside of [-15, 16]"};
         }
 
+        instr_t instr = bFormat(op.code, offset);
+        counter++;
+        return {instr};
     }
 }
 
