@@ -259,6 +259,7 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
         counter++;
         return {instr};
     }
+    return {};
 }
 
 /// \throw regLookup() opLookup()
