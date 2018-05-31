@@ -161,14 +161,6 @@ bool Assembler::assemble() {
         scanner.reset();
         while (!scanner.eof()) {
             vector<string> tokens = scanner.nextOp();
-
-            // DEBUG
-            cout << "Assembling: ";
-            for (auto &token : tokens) {
-                cout << token << ", ";
-            }
-            cout << endl;
-
             vector<instr_t> instructions = assmInstr(tokens);
 
             for (instr_t instr : instructions) {
