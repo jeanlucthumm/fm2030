@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    cout << "Assembling: " << inPath << ", to output file: " << outPath
+    cout << "assembling: " << inPath << ", to output file: " << outPath
          << ", in mode: " << modeStr << endl;
 
     Scanner scanner{in};
