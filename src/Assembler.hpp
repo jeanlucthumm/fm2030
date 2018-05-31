@@ -36,7 +36,7 @@ public:
 
     const static std::unordered_map<std::string, RegEntry> regTable;
 
-    explicit Assembler(Scanner &scanner);
+    explicit Assembler(Scanner &scanner, Writer &writer);
 
     void assemble(const std::ofstream &out);
 
@@ -54,6 +54,7 @@ public:
 
 private:
     Scanner &scanner;
+    Writer &writer;
     int counter;
 
 

@@ -152,7 +152,8 @@ const std::unordered_map<std::string, RegEntry> Assembler::regTable = { // NOLIN
            }},
 };
 
-Assembler::Assembler(Scanner &scanner) : scanner{scanner}, counter{0} {}
+Assembler::Assembler(Scanner &scanner, Writer &writer)
+    : scanner{scanner}, writer{writer}, counter{0} {}
 
 /// \throw Any error from Scanner::nextOp()
 void Assembler::assemble(const std::ofstream &out) {
@@ -163,7 +164,7 @@ void Assembler::assemble(const std::ofstream &out) {
         vector<instr_t> instructions = assmInstr(tokens);
 
         for (instr_t instr : instructions) {
-            // TODO find a suitable output representation
+            writer.write(instr);
         }
     }
 }
