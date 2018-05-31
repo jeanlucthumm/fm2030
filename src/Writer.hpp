@@ -19,6 +19,8 @@ public:
     void write(instr_t instr);
 
 private:
+    void writeHex(instr_t instr);
+
     std::ofstream &out;
     Mode mode;
 };
