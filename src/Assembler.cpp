@@ -203,6 +203,9 @@ instr_t Assembler::bFormat(int opCode, int immediate) {
     instr_t res = 0x0000;
     opCode <<= 5;
 
+    // clear trivial bits
+    immediate &= 0x0000001F;
+
     res |= opCode;
     res |= immediate;
 
@@ -213,6 +216,7 @@ instr_t Assembler::bFormat(int opCode, int immediate) {
 vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
     // handle labels
     if (tokens[0].find(':') != string::npos) { // only labels have ':'
+        tokens[0].erase(std::remove(tokens[0].begin(), tokens[0].end(), ':'), tokens[0].end());
         labelTable[tokens[0]] = counter + 1; // label refers to next instruction
         return {};
     }
