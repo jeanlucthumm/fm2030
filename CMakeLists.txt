@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SRC_FILES
         src/Scanner.cpp src/Scanner.hpp
-        src/Assembler.cpp src/Assembler.hpp)
+        src/Assembler.cpp src/Assembler.hpp
+        src/Writer.cpp src/Writer.hpp)
 
 set(TEST_SRC_FILES
         test/AssemblerTest.hpp)
