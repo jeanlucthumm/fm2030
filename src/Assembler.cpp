@@ -156,7 +156,7 @@ Assembler::Assembler(Scanner &scanner, Writer &writer)
     : scanner{scanner}, writer{writer}, counter{0} {}
 
 /// \throw Any error from Scanner::nextOp()
-void Assembler::assemble(const std::ofstream &out) {
+void Assembler::assemble() {
     scanner.reset();
     while (!scanner.eof()) {
         vector<string> tokens = scanner.nextOp();

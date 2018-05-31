@@ -38,7 +38,7 @@ public:
 
     explicit Assembler(Scanner &scanner, Writer &writer);
 
-    void assemble(const std::ofstream &out);
+    void assemble();
 
 public:
 
