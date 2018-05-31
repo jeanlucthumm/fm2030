@@ -38,7 +38,7 @@ public:
 
     explicit Assembler(Scanner &scanner, Writer &writer);
 
-    void assemble();
+    bool assemble();
 
 public:
 

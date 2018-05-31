@@ -6,7 +6,7 @@
 #define FM2030_ASM_WRITER_HPP
 
 #include <fstream>
-#include "Assembler.hpp"
+#include "comm.hpp"
 
 class Writer {
 public:

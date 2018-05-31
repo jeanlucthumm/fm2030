@@ -2,6 +2,7 @@
 // Created by Jean-Luc Thumm on 5/28/18.
 //
 
+#include <iostream>
 #include "Assembler.hpp"
 
 using namespace std;
@@ -155,18 +156,31 @@ const std::unordered_map<std::string, RegEntry> Assembler::regTable = { // NOLIN
 Assembler::Assembler(Scanner &scanner, Writer &writer)
     : scanner{scanner}, writer{writer}, counter{0} {}
 
-/// \throw Any error from Scanner::nextOp()
-void Assembler::assemble() {
-    scanner.reset();
-    while (!scanner.eof()) {
-        vector<string> tokens = scanner.nextOp();
+bool Assembler::assemble() {
+    try {
+        scanner.reset();
+        while (!scanner.eof()) {
+            vector<string> tokens = scanner.nextOp();
 
-        vector<instr_t> instructions = assmInstr(tokens);
+            // DEBUG
+            cout << "Assembling: ";
+            for (auto &token : tokens) {
+                cout << token << ", ";
+            }
+            cout << endl;
 
-        for (instr_t instr : instructions) {
-            writer.write(instr);
+            vector<instr_t> instructions = assmInstr(tokens);
+
+            for (instr_t instr : instructions) {
+                writer.write(instr);
+            }
         }
     }
+    catch (runtime_error &error) {
+        cerr << error.what() << endl;
+        return false;
+    }
+    return true;
 }
 
 /// \pre parameters contain only 0s for non-relevant bits

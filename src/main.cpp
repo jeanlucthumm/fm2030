@@ -7,12 +7,22 @@
 using namespace std;
 
 int main() {
-    ofstream out{"sdf"};
+    ifstream in{"assembly/program1.s"};
+    ofstream out{"bin/program1.out"};
+
+    Scanner scanner{in};
     Writer writer{out, Writer::HEX};
 
-    instr_t instr = 0x0125;
+    Assembler assembler{scanner, writer};
+    bool success = assembler.assemble();
 
-    writer.write(instr);
+    in.close();
+    out.close();
 
-    return EXIT_SUCCESS;
+    if (success) {
+        return EXIT_SUCCESS;
+    }
+    else {
+        return EXIT_FAILURE;
+    }
 }
