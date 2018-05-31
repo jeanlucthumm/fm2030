@@ -11,8 +11,8 @@
 #include <fstream>
 #include <vector>
 #include "Scanner.hpp"
-
-typedef unsigned short instr_t;
+#include "Writer.hpp"
+#include "comm.hpp"
 
 enum InstrFormat {
     R, B
@@ -55,6 +55,7 @@ public:
 private:
     Scanner &scanner;
     int counter;
+
 
     std::vector<instr_t> assmInstr(std::vector<std::string> &tokens);
 

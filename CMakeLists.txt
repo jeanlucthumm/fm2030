@@ -13,7 +13,7 @@ set(TEST_SRC_FILES
 
 find_package(GTest REQUIRED)
 
-add_executable(fm2030_asm src/main.cpp ${SRC_FILES})
+add_executable(fm2030_asm src/main.cpp ${SRC_FILES} src/comm.hpp)
 
 add_executable(testing test/main.cpp ${SRC_FILES} ${TEST_SRC_FILES})
 
