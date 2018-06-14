@@ -18,14 +18,21 @@ always begin
 end
 
 initial begin
-  $monitor($time, "clock=%b, taps=%X, in=%X, out=%X",
+  $monitor($time, " clock=%b, taps=%X, in=%X, out=%X",
     clock, taps, lfsr_regi, lfsr_rego);
+
+	// Setup
   tapEn = 0;
   clock = 0;
   taps = '0;
+	lfsr_regi = 'hff;
+	#10
+	tapEn = 1;
+	#10
+	tapEn = 0;
 
-  $display("Hello World")
-  $finish
+  #100
+  $stop;
 end
 
 endmodule
