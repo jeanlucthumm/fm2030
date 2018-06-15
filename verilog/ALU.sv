@@ -1,7 +1,7 @@
 module ALU(
 	input[1:0] r0_rd,
 	input[1:0] rs,
-	input[3:0] control,
+	input[1:0] control,
 
 	output logic[2:0] result
 
@@ -10,16 +10,16 @@ module ALU(
 always_comb
 begin
 
-	if(control == 4'b0000) 
+	if(control == 2'b00) 
 	begin
 		result = r0_rd + rs;
 	end
 
-	else if(control == 4'b0001)
+	else if(control == 2'b01)
 	begin
 		result = r0_rd - rs;
 	end
-	else if(control == 4'b1011)
+	else if(control == 2'b10)
 	begin
 		result = r0_rd + 1; 
 	end
