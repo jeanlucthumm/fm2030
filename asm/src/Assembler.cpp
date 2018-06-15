@@ -279,7 +279,7 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
         }
         int addr = itr->second;
 
-        int offset = addr - (counter + 2); // PC + 1, relative
+        int offset = addr - (counter + 1); // PC, relative
 
         if (offset < -16 || offset > 15) {
             throw runtime_error{"label \"" + tokens[1] + "\" refers to an offset" +
