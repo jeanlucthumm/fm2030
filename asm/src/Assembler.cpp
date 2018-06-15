@@ -233,6 +233,26 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
             instr = rFormat(op.code, rd.code, std::atoi(tokens[2].c_str()), sbit);
         }
 
+        // handle cmp which is only allowed one special register
+        if (tokens[0] == "cmp") {
+            auto rs = regLookup(tokens[2]);
+
+            if (rd.special && rs.special) {
+                throw std::runtime_error{"cmp cannot take two special arguments"};
+            }
+
+            // ensure that the special register is second, since order does not matter
+            if (rd.special) {
+                instr = rFormat(op.code, rs.code, rd.code, 1);
+            }
+            else if (rs.special) {
+                instr = rFormat(op.code, rd.code, rs.code, 1);
+            }
+            else {
+                instr = rFormat(op.code, rd.code, rs.code, 0);
+            }
+        }
+
         if (tokens.size() == 3) {
             auto rs = regLookup(tokens[2]);
             int sbit = (rs.special) ? 1 : 0;
