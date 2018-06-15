@@ -31,8 +31,8 @@ int main(int argc, char **argv) {
     string outPath{argv[2]};
     string modeStr{argv[3]};
 
-    ifstream in{"assembly/program1.s"};
-    ofstream out{"bin/program1.out"};
+    ifstream in{inPath};
+    ofstream out{outPath};
 
     if (!in.is_open()) {
         cout << "could not open file: " << inPath << endl;
