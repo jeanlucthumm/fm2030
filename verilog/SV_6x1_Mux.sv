@@ -4,10 +4,10 @@ input  logic  in_1     , // Mux Second input
 input  logic  in_2     , // Mux Second input
 input  logic  in_3     , // Mux Second input
 input  logic  in_4     , // Mux Second input
-input  logic  in_5     , // Mux Second input
+input  logic[7:0]  in_5     , // Mux Second input
 input[0:2]  ctrl,
 
-output logic out      // Mux output
+output logic[7:0] out      // Mux output
 );
 
 always_comb 
