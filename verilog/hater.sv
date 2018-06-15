@@ -1,6 +1,6 @@
 module  Hater(
-input[0:7]  PC_Curr       , // Current PC counter value 
-input[0:7]  PC_End     , //  PC counter value upon program completion
+input[7:0]  PC_Curr       , // Current PC counter value 
+input[7:0]  PC_End     , //  PC counter value upon program completion
 input clk,
 input reset,
 
@@ -17,7 +17,7 @@ begin
 		endState <= PC_End;
 		set <= 1;
 	end
-	if(reset == 1)
+	else if(reset == 1)
 	begin
 		set <= 0;
 	end
@@ -27,6 +27,7 @@ always_comb
 begin
 
 	if(PC_Curr == endState) begin 
+		
 		halt = 1;
 		
 	end else begin
