@@ -1,7 +1,8 @@
 module  Hater(
 input[0:7]  PC_Curr       , // Current PC counter value 
 input[0:7]  PC_End     , //  PC counter value upon program completion
-//input[1:0]  wire  ctrl,
+input clk,
+input reset,
 
 output logic halt      //Halt signal
 );
@@ -9,9 +10,17 @@ output logic halt      //Halt signal
 reg set;
 reg[7:0] endState; 
 
-initial 
+always_ff @ (posedge clk)
 begin
-	endState = PC_End; 
+	if(set == 0) 
+	begin
+		endState <= PC_End;
+		set <= 1;
+	end
+	if(reset == 1)
+	begin
+		set <= 0;
+	end
 end
 
 always_comb
