@@ -234,7 +234,7 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
         }
 
         // handle cmp which is only allowed one special register
-        if (tokens[0] == "cmp") {
+        else if (tokens[0] == "cmp") {
             auto rs = regLookup(tokens[2]);
 
             if (rd.special && rs.special) {
@@ -253,7 +253,7 @@ vector<instr_t> Assembler::assmInstr(std::vector<std::string> &tokens) {
             }
         }
 
-        if (tokens.size() == 3) {
+        else if (tokens.size() == 3) {
             auto rs = regLookup(tokens[2]);
             int sbit = (rs.special) ? 1 : 0;
 
