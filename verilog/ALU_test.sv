@@ -5,12 +5,14 @@ reg[7:0] rs;
 reg[1:0] control;
 
 wire[7:0] result;
+wire z;
 
 ALU s(
 	.r0_rd(r0_rd),
 	.rs(rs),
 	.control(control),
-	.result(result)
+	.result(result),
+  .z(z)
 );
 
 initial begin
