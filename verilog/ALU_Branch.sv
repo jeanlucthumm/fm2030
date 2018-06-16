@@ -1,6 +1,6 @@
 module ALU_Branch(
 	input[7:0] PC_Curr,
-	input[4:0] offset,
+	input[7:0] offset,
 
 	output logic[7:0] PC_New
 );
