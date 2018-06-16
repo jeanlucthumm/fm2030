@@ -23,7 +23,7 @@ program_counter pc (
   .addr(pc_addr)
 );
 
-wire end_pc;  // always contains ending program counter
+wire[7:0] end_pc;  // always contains ending program counter
 
 // halter tells program counter when to stop
 halter Halter (

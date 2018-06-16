@@ -14,7 +14,7 @@ reg[7:0] pc;
 
 always_ff @(posedge clk) begin
 	if (reset) begin
-		pc <= 0;
+		pc <= 1;
 	end else if (!halt) begin 
 		if (branch)
 			pc <= pc + offset;
