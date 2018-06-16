@@ -128,11 +128,11 @@ const std::unordered_map<std::string, RegEntry> Assembler::regTable = { // NOLIN
                false,
            }},
     {"r2", {
-               0x10,
+               0x02,
                false,
            }},
     {"r3", {
-               0x11,
+               0x03,
                false,
            }},
     {"s0", {
@@ -144,11 +144,11 @@ const std::unordered_map<std::string, RegEntry> Assembler::regTable = { // NOLIN
                true,
            }},
     {"s2", {
-               0x10,
+               0x02,
                true,
            }},
     {"s3", {
-               0x11,
+               0x03,
                true,
            }},
 };

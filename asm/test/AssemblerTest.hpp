@@ -41,6 +41,11 @@ TEST(Assembler, rFormat) {
         Assembler::rFormat(0x09, 0x00, 0x02, 0x01), // moved r0, s2
         0x0125
     );
+
+    EXPECT_EQ(
+        Assembler::rFormat(0, 0x02, 0x02, 1),
+        0x015
+        );
 }
 
 TEST(Assembler, bFormat) {
