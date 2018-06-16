@@ -1,7 +1,7 @@
 module MEM_test();
 
 reg clk;
-reg memWrite;
+reg memWrite; 
 reg memRead;
 reg[7:0] addr;
 reg[7:0] dataIn;

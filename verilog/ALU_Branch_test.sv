@@ -1,7 +1,7 @@
 module ALU_Branch_test();
 
 reg[7:0] PC_Curr;
-reg[4:0] offset;
+reg[7:0] offset;
 
 wire[7:0] PC_New;
 
@@ -14,23 +14,23 @@ ALU_Branch s(
 initial begin
 	// setup
 	PC_Curr = 8'b00010000;
-	offset = 5'b10000; 
+	offset = 8'b00010000; 
 	#50
 
 	PC_Curr = 8'b00000100;
-	offset = 5'b00000; 
+	offset = 8'b00000000; 
 	#50
 
 	PC_Curr = 8'b00000010;
-	offset = 5'b00101; 
+	offset = 8'b00000101; 
 	#50
 
 	PC_Curr = 8'b00001111;
-	offset = 5'b00001; 
+	offset = 8'b00000001; 
 	#50
 
 	PC_Curr = 8'b00000010;
-	offset = 5'b10001;
+	offset = 8'b00010001;
 	#50
 
 	$stop;
