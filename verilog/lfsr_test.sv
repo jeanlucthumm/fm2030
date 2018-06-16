@@ -1,37 +1,67 @@
-`include "lfsr.sv"
 module lfsr_test();
 
-reg clock, tapEn;
-reg[7:0] lfsr_regi, taps;
-wire[7:0] lfsr_rego;
+reg clk, tapEn, np;
+reg[7:0] in, taps;
+wire[7:0] out;
 
 lfsr l0 (
-  .clock(clock),
-  .in(lfsr_regi),
-  .out(lfsr_rego),
-  .tapIn(taps),
+  .clk(clk),
+  .in(in),
+	.np(np),
+  .out(out),
+  .tapData(taps),
   .tapEn(tapEn)
 );
 
 always begin
-  #5 clock = !clock;
+  #5 clk = !clk;
 end
 
 initial begin
-  $monitor($time, " clock=%b, taps=%X, in=%X, out=%X",
-    clock, taps, lfsr_regi, lfsr_rego);
-
-	// Setup
+	// setup
   tapEn = 0;
-  clock = 0;
-  taps = '0;
-	lfsr_regi = 'hff;
+  clk = 0;
+  taps = 'h5c;
+	in = 'hff;
+	np = 1;
 	#10
 	tapEn = 1;
 	#10
 	tapEn = 0;
 
-  #100
+	// test next
+	#10
+	in = out;
+	#10
+	in = out;
+	#10
+	in = out;
+	#10
+	in = out;
+	#10
+	in = out;
+	#10
+	in = out;
+	#20
+
+	// test previous normal taps
+	np = 0;
+	#10
+	in = 'hfe;
+	#20
+
+	// test previous problem taps (tapped shifted away)
+	taps = 'h9c;
+	tapEn = 1;
+	#10
+	tapEn = 0;
+	#10
+
+	in = 'hfe;
+	#10
+	in = 'hff;
+	#10
+
   $stop;
 end
 
