@@ -10,13 +10,13 @@
 using namespace std;
 
 static const char *usage =
-    "Usage: fm2030_asm in out [PACK|PAD|HEX]\n"
+    "Usage: fm2030_asm in out [PACK|BIN|HEX]\n"
     "\tin:\t\t assembly code\n"
     "\tout:\t assembled code destination\n"
     "\tmode:\t output mode\n"
     "\t\tPACK:\t pack instructions without space between them, disregarding byte "
     "boundaries. 0 padding will be added at the end to byte align file.\n"
-    "\t\tPAD:\t pad instructions such that each ends on a byte boundary\n"
+    "\t\tBIN:\t output instructions in ASCII binary representation\n"
     "\t\tHEX:\t output instructions in ASCII HEX representation\n";
 
 
@@ -47,8 +47,8 @@ int main(int argc, char **argv) {
     if (modeStr == "PACK") {
         mode = Writer::PACK;
     }
-    else if (modeStr == "PAD") {
-        mode = Writer::PAD;
+    else if (modeStr == "BIN") {
+        mode = Writer::BIN;
     }
     else if (modeStr == "HEX") {
         mode = Writer::HEX;

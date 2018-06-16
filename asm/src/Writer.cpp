@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <bitset>
 
 using namespace std;
 
@@ -16,7 +17,8 @@ void Writer::write(instr_t instr) {
     switch (mode) {
         case PACK:
             break;
-        case PAD:
+        case BIN:
+            writeBin(instr);
             break;
         case HEX:
             writeHex(instr);
@@ -27,4 +29,9 @@ void Writer::write(instr_t instr) {
 void Writer::writeHex(instr_t instr) {
     out << "0x" << std::uppercase << std::hex <<
          std::setw(4) << std::setfill('0') << instr << endl;
+}
+
+void Writer::writeBin(instr_t instr) {
+    bitset<9> bits{instr};
+    out << bits << endl;
 }

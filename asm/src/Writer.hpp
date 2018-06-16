@@ -11,7 +11,7 @@
 class Writer {
 public:
     enum Mode {
-        PACK, PAD, HEX
+        PACK, BIN, HEX
     };
 
     Writer(std::ofstream &out, Mode mode);
@@ -20,6 +20,8 @@ public:
 
 private:
     void writeHex(instr_t instr);
+
+    void writeBin(instr_t instr);
 
     std::ofstream &out;
     Mode mode;
