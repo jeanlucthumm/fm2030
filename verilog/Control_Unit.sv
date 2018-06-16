@@ -1,6 +1,7 @@
 module Control_Unit(
 	input[3:0] opcode,
-
+	input sp;
+	
 	output logic[1:0] MUX1,
 	output logic[2:0] MUX2,
 	output logic MUX3,
@@ -161,18 +162,25 @@ begin
 
 		end
 
-		4'b1001: //moved (How to account for special bit??)
+		4'b1001: //moved 
 		begin
 						
-			MUX1 = 2;
 			MUX2 = 4;
 			Reg_Write = 1;
 			Tap_Write = 0;
-			MUX4 = 1;
 			Mem_Write = 0;
 			Mem_Read = 0;
 			MUX6 = 0;
-			Branch = 0;		
+			Branch = 0;
+			if(sp)
+			begin
+				MUX1 = 1;	
+				MUX4 = 2;
+			end
+			else begin
+				MUX1 = 2;
+				MUX4 = 1;
+			end
 		
 		end
 

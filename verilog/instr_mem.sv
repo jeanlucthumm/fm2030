@@ -4,7 +4,8 @@ module instr_mem (
 	output logic[1:0] rs,
 	output logic[1:0] rd,
 	output logic[3:0] op,
-	output logic sp
+	output logic sp,
+  output logic[7:0] first
 );
 
 reg[8:0] array[1024];
@@ -17,6 +18,7 @@ always_comb begin
 	rd = instr[4:3];
 	op = instr[8:5];
 	sp = instr[0];
+  first = array[0][7:0];
 end
 
 endmodule

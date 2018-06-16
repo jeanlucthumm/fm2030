@@ -1,9 +1,9 @@
 module  mux_2x1(
-input  logic  in_0      , // Mux first input
-input  logic  in_1     , // Mux Second input
+input  logic[7:0]  in_0      , // Mux first input
+input  logic[7:0]  in_1     , // Mux Second input
 input  logic  ctrl,
 
-output logic out      // Mux output
+output logic[7:0] out      // Mux output
 );
 
 always_comb
