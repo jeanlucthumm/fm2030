@@ -4,8 +4,8 @@ module instr_mem (
 	output logic[1:0] rs,
 	output logic[1:0] rd,
 	output logic[3:0] op,
-	output logic sp
-  output logic first,
+	output logic sp,
+  output logic first
 );
 
 reg[8:0] array[1024];
