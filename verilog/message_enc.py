@@ -1,7 +1,7 @@
 MSG = "Mr. Watson, come here. I want to see you."
-SPACE_COUNT = 10
-TAPS = 0xE1
-INIT = 0xFF
+SPACE_COUNT = 10    # number of spaces to append before and after msg
+TAPS = 0xE1         # taps used for LFSR
+INIT = 0xFF         # LFSR initial state
 
 
 def binary(c):
@@ -11,7 +11,7 @@ def binary(c):
         return format(c, '08b')
 
 
-for c in enumerate(MSG):
+for c in MSG:
     print(binary(c))
 
 print(binary(SPACE_COUNT))
